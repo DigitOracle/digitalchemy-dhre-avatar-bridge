@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DigitAlchemy® × Medialogic · DHRE</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:   #190A46;
+  --navy-bg:rgba(25,10,70,0.06);
+  --red:    #C8102E;
+  --black:  #111111;
+  --mid:    #444444;
+  --muted:  #888888;
+  --rule:   #E0E0E0;
+  --bg:     #FFFFFF;
+  --bg-off: #F7F7F7;
+  --gate:   #F0A500;
+  --sans:   'Syne', sans-serif;
+  --mono:   'DM Mono', monospace;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  background: #111;
+  font-family: var(--sans);
+  overflow: hidden;
+}
+
+.deck { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+.slides-wrapper { width: 100%; height: 100%; position: relative; }
+
+.slide {
+  position: absolute; inset: 0;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  opacity: 0; pointer-events: none;
+  transform: translateX(40px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.slide.active { opacity: 1; pointer-events: all; transform: translateX(0); }
+.slide.exit-left { opacity: 0; transform: translateX(-40px); }
+
+.top-bar { display: flex; height: 4px; flex-shrink: 0; }
+.tb-navy { flex: 1; background: var(--navy); }
+.tb-red  { width: 140px; background: var(--red); }
+
+/* ══ SHARED HEADER STYLES ══ */
+.s-eyebrow {
+  font-family: var(--mono); font-size: 10px; color: var(--red);
+  letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 5px;
+}
+.s-title {
+  font-family: var(--sans); font-size: 28px; font-weight: 800;
+  color: var(--navy); letter-spacing: -0.02em;
+}
+.s-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 72px; border-top: 1px solid var(--rule); flex-shrink: 0;
+}
+.footer-meta {
+  font-family: var(--mono); font-size: 9px; color: var(--muted);
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+.footer-meta strong { color: var(--mid); font-weight: 400; }
+.v-rule { background: var(--rule); }
+.slide-id { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.1em; }
+.slide-id span { color: var(--navy); font-weight: 700; }
+
+/* ══════════════════════════════════
+   SLIDE 1 — COVER
+══════════════════════════════════ */
+.s1-header {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 28px 72px; border-bottom: 1px solid var(--rule); flex-shrink: 0;
+}
+.brand-block { display: flex; flex-direction: column; gap: 5px; }
+.brand-block.right { text-align: right; align-items: flex-end; }
+.brand-label { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; }
+.brand-name { font-family: var(--sans); font-size: 24px; font-weight: 800; color: var(--navy); letter-spacing: -0.02em; line-height: 1; }
+.brand-name sup { font-size: 0.45em; vertical-align: super; color: var(--red); }
+.brand-name.ml { color: var(--red); }
+.brand-descriptor { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
+.jv-badge { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0 52px; }
+.jv-line { width: 1px; height: 22px; background: var(--rule); }
+.jv-text { font-family: var(--mono); font-size: 8px; color: var(--muted); letter-spacing: 0.22em; text-transform: uppercase; white-space: nowrap; }
+
+.s1-main { flex: 1; display: grid; grid-template-columns: 1fr 1px 1fr; overflow: hidden; }
+
+.s1-hero { display: flex; flex-direction: column; justify-content: center; padding: 52px 72px; gap: 32px; }
+.eyebrow { display: flex; align-items: center; gap: 14px; }
+.eyebrow-line { width: 32px; height: 2px; background: var(--red); flex-shrink: 0; }
+.eyebrow-text { font-family: var(--mono); font-size: 11px; color: var(--red); letter-spacing: 0.18em; text-transform: uppercase; }
+.hero-title { font-family: var(--sans); font-size: clamp(38px,5vw,72px); font-weight: 800; color: var(--navy); line-height: 1.0; letter-spacing: -0.03em; }
+.hero-title .t2 { color: var(--black); font-weight: 400; display: block; }
+.hero-title .t3 { color: var(--red); display: block; }
+.hero-statement { font-family: var(--mono); font-size: 13px; font-weight: 300; color: var(--mid); line-height: 1.9; border-left: 3px solid var(--navy); padding-left: 18px; max-width: 460px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; padding: 5px 12px; border: 1px solid var(--rule); color: var(--muted); background: var(--bg-off); }
+.tag.on   { border-color: var(--navy); color: var(--navy); background: var(--navy-bg); }
+.tag.live { border-color: var(--red);  color: var(--red);  background: rgba(200,16,46,0.05); }
+
+.s1-matrix { display: flex; flex-direction: column; justify-content: center; padding: 52px 72px; }
+.matrix-label { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 0.22em; text-transform: uppercase; padding-bottom: 16px; border-bottom: 1px solid var(--rule); margin-bottom: 6px; }
+.uc-row { display: grid; grid-template-columns: 4px 1fr auto; gap: 0 18px; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--rule); cursor: default; }
+.uc-row:last-child { border-bottom: none; }
+.uc-bar { align-self: stretch; min-height: 100%; transition: background 0.2s; }
+.uc-bar.deployed { background: var(--red); }
+.uc-bar.default  { background: var(--rule); }
+.uc-row:hover .uc-bar.default { background: var(--navy); }
+.uc-content { display: flex; flex-direction: column; gap: 5px; }
+.uc-title { font-family: var(--sans); font-size: 17px; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; }
+.uc-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.04em; font-weight: 300; line-height: 1.5; }
+.uc-badge { font-family: var(--mono); font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 10px; white-space: nowrap; align-self: center; }
+.uc-badge.live     { background: var(--red); color: #fff; }
+.uc-badge.design   { background: var(--navy); color: #fff; display:flex; flex-direction:column; align-items:center; gap:2px; padding: 6px 12px; line-height:1.3; }
+.uc-badge.design .badge-sub { font-size:7px; color:rgba(255,255,255,0.7); letter-spacing:0.08em; text-transform:uppercase; font-weight:300; }
+.uc-badge.proposed { border: 1px solid var(--navy); color: var(--navy); }
+.uc-badge.expand   { border: 1px solid var(--rule); color: var(--muted); }
+/* index grid */
+.idx-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.idx-item { display: grid; grid-template-columns: 24px 1fr; gap: 0 10px; align-items: start; padding: 11px 0; border-bottom: 1px solid var(--rule); }
+.idx-item:nth-child(odd) { padding-right: 20px; border-right: 1px solid var(--rule); }
+.idx-item:nth-child(even) { padding-left: 20px; }
+.idx-item:nth-last-child(-n+2) { border-bottom: none; }
+.idx-num { font-family: var(--mono); font-size: 9px; color: var(--rule); padding-top: 2px; }
+.idx-name { font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; line-height: 1.2; }
+.idx-desc { font-family: var(--mono); font-size: 9px; color: var(--muted); font-weight: 300; letter-spacing: 0.03em; margin-top: 3px; line-height: 1.4; }
+
+/* ══════════════════════════════════
+   SLIDE 2 — TIMELINE
+══════════════════════════════════ */
+.s2-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 72px; border-bottom: 1px solid var(--rule); flex-shrink: 0;
+}
+.legend { display: flex; align-items: center; gap: 20px; }
+.legend-item { display: flex; align-items: center; gap: 8px; }
+.ld { width: 10px; height: 10px; flex-shrink: 0; }
+.ld.m1 { background: #190A46; }
+.ld.m2 { background: #2D1A7A; }
+.ld.m3 { background: #4A2DB0; }
+.ld.sc { background: var(--red); }
+.ld.gate { background: var(--gate); transform: rotate(45deg); }
+.ll { font-family: var(--mono); font-size: 9px; color: var(--mid); letter-spacing: 0.1em; text-transform: uppercase; }
+
+.s2-body { flex: 1; display: flex; flex-direction: column; padding: 20px 72px 12px; gap: 2px; overflow: hidden; }
+
+/* Timeline uses 36 columns: 24 for T1, gap, 12 for T2 — but we show them on same axis */
+/* We use a 36-day axis, T1=days 1-24, T2=days 8-19 (offset to show parallel) */
+
+.axis-row { display: grid; grid-template-columns: 190px 1fr; gap: 0 20px; flex-shrink: 0; margin-bottom: 4px; }
+.axis-track { display: grid; grid-template-columns: repeat(42,1fr); }
+.ax { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 0.05em; text-align: center; padding-bottom: 6px; border-bottom: 2px solid var(--rule); }
+.ax.wk { color: var(--navy); font-weight: 600; border-bottom-color: var(--navy); }
+
+.track-hdr { display: grid; grid-template-columns: 190px 1fr; gap: 0 20px; align-items: center; margin: 8px 0 2px; }
+.track-name { font-family: var(--sans); font-size: 13px; font-weight: 700; color: var(--navy); }
+.track-name.red { color: var(--red); }
+.track-sub { font-family: var(--mono); font-size: 8px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+.track-rule { height: 1px; background: var(--rule); }
+.track-rule.red-rule { background: rgba(200,16,46,0.3); }
+
+.ph-row { display: grid; grid-template-columns: 190px 1fr; gap: 0 20px; align-items: center; min-height: 38px; }
+.ph-label { font-family: var(--mono); font-size: 9px; color: var(--mid); text-align: right; padding-right: 6px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ph-grid { display: grid; grid-template-columns: repeat(42,1fr); position: relative; height: 100%; align-items: center; }
+.ph-grid::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(90deg, transparent, transparent calc(100%/42 - 1px), var(--rule) calc(100%/42 - 1px), var(--rule) calc(100%/42));
+  opacity: 0.3; pointer-events: none;
+}
+.bar { height: 24px; border-radius: 2px; position: absolute; top: 50%; transform: translateY(-50%); display: flex; align-items: center; padding: 0 10px; }
+.bar span { font-family: var(--mono); font-size: 8px; color: rgba(255,255,255,0.92); letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.gate-row { display: grid; grid-template-columns: 190px 1fr; gap: 0 20px; min-height: 26px; align-items: center; }
+.gate-track { display: grid; grid-template-columns: repeat(42,1fr); position: relative; height: 100%; align-items: center; }
+.gate-diamond { position: absolute; top: 50%; transform: translate(-50%,-50%) rotate(45deg); width: 12px; height: 12px; }
+.gate-txt { position: absolute; top: 50%; transform: translateY(-50%); font-family: var(--mono); font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; font-weight: 500; }
+
+.trk-div { display: grid; grid-template-columns: 190px 1fr; gap: 0 20px; align-items: center; margin: 4px 0; }
+.trk-div-label { font-family: var(--mono); font-size: 8px; color: var(--gate); text-align: right; padding-right: 6px; line-height: 1.4; letter-spacing: 0.06em; }
+.trk-div-line { position: relative; border-top: 1px dashed #ddd; }
+.trk-div-arrow { position: absolute; font-family: var(--mono); font-size: 8px; color: var(--gate); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; top: 3px; }
+
+/* ══════════════════════════════════
+   SLIDE 3 — DOMAIN MAP
+══════════════════════════════════ */
+.domain-card {
+  background: var(--bg); padding: 32px 36px;
+  display: flex; flex-direction: column; gap: 10px;
+  cursor: pointer; transition: background 0.2s, transform 0.2s;
+  position: relative;
+}
+.domain-card:hover { background: var(--navy); }
+.domain-card:hover .dc-num { color: rgba(255,255,255,0.3); }
+.domain-card:hover .dc-title { color: #fff; }
+.domain-card:hover .dc-desc { color: rgba(255,255,255,0.6); }
+.domain-card:hover .dc-arrow { color: var(--red); }
+.domain-card.phase2 { cursor: default; background: var(--bg-off); }
+.domain-card.phase2 .dc-title { color: var(--muted); }
+.domain-card.phase2 .dc-desc { color: var(--rule); }
+.domain-card.phase2:hover { background: var(--bg-off); }
+.domain-card.phase2:hover .dc-num { color: var(--rule); }
+.domain-card.phase2:hover .dc-title { color: var(--muted); }
+.dc-phase { font-family: var(--mono); font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--rule); padding: 3px 8px; align-self: flex-start; margin-top: auto; }
+.dc-num { font-family: var(--mono); font-size: 10px; color: var(--rule); letter-spacing: 0.2em; }
+.dc-title { font-family: var(--sans); font-size: 16px; font-weight: 700; color: var(--navy); line-height: 1.2; letter-spacing: -0.01em; }
+.dc-desc { font-family: var(--mono); font-size: 10px; color: var(--muted); line-height: 1.7; flex: 1; }
+.dc-arrow { font-family: var(--mono); font-size: 16px; color: var(--rule); align-self: flex-end; transition: color 0.2s; }
+.s3-main { flex: 1; display: grid; grid-template-columns: 1fr 1px 1fr; overflow: hidden; }
+.s3-left { display: flex; flex-direction: column; justify-content: center; padding: 52px 72px; gap: 32px; }
+.stmt-label { display: flex; align-items: center; gap: 12px; }
+.stmt-line { width: 28px; height: 2px; background: var(--navy); flex-shrink: 0; }
+.stmt-tag { font-family: var(--mono); font-size: 10px; color: var(--navy); letter-spacing: 0.18em; text-transform: uppercase; }
+.stmt-headline { font-family: var(--sans); font-size: clamp(32px,4vw,56px); font-weight: 800; color: var(--navy); line-height: 1.05; letter-spacing: -0.02em; }
+.stmt-headline .acc { color: var(--red); }
+.stmt-body { font-family: var(--mono); font-size: 12px; font-weight: 300; color: var(--mid); line-height: 1.9; max-width: 440px; }
+.legal-box { border: 1px solid var(--rule); border-left: 3px solid var(--navy); padding: 20px 24px; background: var(--bg-off); }
+.legal-title { font-family: var(--mono); font-size: 9px; font-weight: 500; color: var(--navy); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; }
+.legal-body { font-family: var(--mono); font-size: 10px; font-weight: 300; color: var(--mid); line-height: 1.75; letter-spacing: 0.02em; }
+
+.s3-right { display: flex; flex-direction: column; justify-content: center; padding: 52px 72px; }
+.scope-lbl { font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing: 0.22em; text-transform: uppercase; padding-bottom: 14px; border-bottom: 1px solid var(--rule); margin-bottom: 4px; }
+.scope-row { display: grid; grid-template-columns: 32px 1fr auto; align-items: center; gap: 16px; padding: 15px 0; border-bottom: 1px solid var(--rule); cursor: default; transition: background 0.15s; }
+.scope-row:last-child { border-bottom: none; }
+.scope-row:hover { background: var(--bg-off); margin: 0 -14px; padding-left: 14px; padding-right: 14px; }
+.sc-num { font-family: var(--mono); font-size: 9px; color: var(--rule); }
+.sc-name { font-family: var(--sans); font-size: 15px; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; }
+.sc-tag { font-family: var(--mono); font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--rule); color: var(--muted); white-space: nowrap; }
+
+/* ══════════════════════════════════
+   NAVIGATION
+══════════════════════════════════ */
+.nav {
+  position: fixed; top: 50%; transform: translateY(-50%);
+  display: contents;
+  z-index: 100;
+}
+.nav-sidebar {
+  position: fixed; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  background: rgba(255,255,255,0.97); border: 1px solid var(--rule);
+  padding: 16px 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  z-index: 100;
+}
+.nav-sidebar.left { left: 0; border-left: none; border-radius: 0 6px 6px 0; }
+.nav-sidebar.right { right: 0; border-right: none; border-radius: 6px 0 0 6px; }
+.nav-btn {
+  font-family: var(--mono); font-size: 9px; color: var(--navy);
+  background: none; border: none; cursor: pointer;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  writing-mode: vertical-rl; padding: 4px 2px;
+  transition: opacity 0.15s;
+}
+.nav-btn:disabled { opacity: 0.2; cursor: default; }
+.nav-dots { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.nav-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--rule); transition: background 0.2s;
+  cursor: pointer;
+}
+.nav-dot.active { background: var(--navy); }
+.nav-counter { display: none; }
+.nav-div { display: none; }
+.nav-btn { font-family: var(--mono); font-size: 11px; color: var(--navy); background: none; border: none; cursor: pointer; padding: 4px 14px; letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.15s; }
+.nav-btn:hover { background: var(--navy-bg); }
+.nav-btn:disabled { color: var(--rule); cursor: default; }
+.nav-btn:disabled:hover { background: none; }
+.nav-counter { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; min-width: 52px; text-align: center; }
+.nav-counter span { color: var(--navy); font-weight: 700; }
+.nav-div { width: 1px; height: 18px; background: var(--rule); }
+
+/* ══════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes growBar {
+  from { transform: translateY(-50%) scaleX(0); transform-origin: left; }
+  to   { transform: translateY(-50%) scaleX(1); }
+}
+.slide.active .anim { animation: fadeUp 0.45s ease both; }
+.slide.active .bar  { animation: growBar 0.5s cubic-bezier(0.4,0,0.2,1) both; }
+.a1{animation-delay:0.05s!important} .a2{animation-delay:0.12s!important}
+.a3{animation-delay:0.20s!important} .a4{animation-delay:0.28s!important}
+.a5{animation-delay:0.36s!important} .a6{animation-delay:0.44s!important}
+.a7{animation-delay:0.52s!important} .a8{animation-delay:0.60s!important}
+.a9{animation-delay:0.68s!important}
+.b1{animation-delay:0.28s!important} .b2{animation-delay:0.36s!important}
+.b3{animation-delay:0.44s!important} .b4{animation-delay:0.52s!important}
+.b5{animation-delay:0.60s!important} .b6{animation-delay:0.68s!important}
+</style>
+</head>
+<body>
+<div class="deck">
+<div class="slides-wrapper">
+
+<!-- ════════════════ SLIDE 1 ════════════════ -->
+<div class="slide active" id="slide-1">
+  <div class="top-bar"><div class="tb-navy"></div><div class="tb-red"></div></div>
+  <div class="s1-header anim a1">
+    <div class="brand-block">
+      <div class="brand-label">AI Platform Partner</div>
+      <div class="brand-name">DigitAlchemy<sup>®</sup></div>
+      <div class="brand-descriptor">Urban Intelligence · ADGM · Abu Dhabi</div>
+    </div>
+    <div class="jv-badge">
+      <div class="jv-line"></div><div class="jv-text">Joint Venture</div><div class="jv-line"></div>
+    </div>
+    <div class="brand-block right">
+      <div class="brand-label">Technology & AV Partner</div>
+      <div class="brand-name ml">Medialogic</div>
+      <div class="brand-descriptor">AECO Technology & AV · Dubai · 13+ Years</div>
+    </div>
+  </div>
+  <div class="s1-main">
+    <div class="s1-hero">
+      <div class="eyebrow anim a2"><div class="eyebrow-line"></div><div class="eyebrow-text">Presented to Dubai Holding Real Estate</div></div>
+      <div class="hero-title anim a3">The Digital<br/><span class="t2">Avatar as</span><span class="t3">Enterprise Platform</span></div>
+      <div class="hero-statement anim a4">The AI Reception design is complete<br/>and ready to deploy. This briefing makes<br/>the case for scaling that intelligence<br/>across every layer of the DHRE asset<br/>lifecycle — on a single engagement.</div>
+      <div class="tags anim a5">
+        <div class="tag on">Design Complete</div>
+        <div class="tag on">AI-First</div>
+        <div class="tag on">Scalable</div>
+        <div class="tag on">Dual Deployment</div>
+      </div>
+    </div>
+    <div class="v-rule"></div>
+    <div class="s1-matrix">
+      <div class="matrix-label anim a2">Platform Integration Index · 12 Enterprise Domains</div>
+      <div class="uc-row anim a3"><div class="uc-bar deployed"></div><div class="uc-content"><div class="uc-title">AI Avatar · Innovation Lab</div><div class="uc-sub">Intelligent visitor management · multilingual · presence detection · MS Teams integrated</div></div><div class="uc-badge design">DESIGN COMPLETE<span class="badge-sub">Ready to Deploy On-Site</span></div></div>
+      <div class="uc-row anim a4"><div class="uc-bar deployed"></div><div class="uc-content"><div class="uc-title">AI Avatar · Sales Centre</div><div class="uc-sub">Intelligent buyer engagement · multilingual · property walkthrough · unit availability</div></div><div class="uc-badge design">DESIGN COMPLETE<span class="badge-sub">Ready to Deploy On-Site</span></div></div>
+      <div class="idx-grid anim a5">
+        <div class="idx-item"><div class="idx-num">01</div><div><div class="idx-name">Reception & Identity</div><div class="idx-desc">Visitor mgmt · badge · biometrics · access</div></div></div>
+        <div class="idx-item"><div class="idx-num">02</div><div><div class="idx-name">Calendar & Comms</div><div class="idx-desc">MS Teams · Outlook · room booking</div></div></div>
+        <div class="idx-item"><div class="idx-num">03</div><div><div class="idx-name">CRM & Sales</div><div class="idx-desc">Salesforce · HubSpot · lead capture</div></div></div>
+        <div class="idx-item"><div class="idx-num">04</div><div><div class="idx-name">Document & Compliance</div><div class="idx-desc">DocuSign · DMS · DigitOracle®</div></div></div>
+        <div class="idx-item"><div class="idx-num">05</div><div><div class="idx-name">BIM & Digital Twin</div><div class="idx-desc">Revit · IFC · live model queries</div></div></div>
+        <div class="idx-item"><div class="idx-num">06</div><div><div class="idx-name">GIS & Spatial</div><div class="idx-desc">ArcGIS · site plans · asset location</div></div></div>
+        <div class="idx-item"><div class="idx-num">07</div><div><div class="idx-name">ERP & Finance</div><div class="idx-desc">SAP · Oracle · feasibility · TTM-06</div></div></div>
+        <div class="idx-item"><div class="idx-num">08</div><div><div class="idx-name">FM & IoT</div><div class="idx-desc">CAFM · BMS · VIPER® sensors</div></div></div>
+        <div class="idx-item"><div class="idx-num">09</div><div><div class="idx-name">HR & People</div><div class="idx-desc">Active Directory · onboarding · identity</div></div></div>
+        <div class="idx-item"><div class="idx-num">10</div><div><div class="idx-name">Construction Mgmt</div><div class="idx-desc">Procore · Aconex · RFI · site briefings</div></div></div>
+        <div class="idx-item"><div class="idx-num">11</div><div><div class="idx-name">Analytics & BI</div><div class="idx-desc">Power BI · dashboards · investor reporting</div></div></div>
+        <div class="idx-item"><div class="idx-num">12</div><div><div class="idx-name">AI & Knowledge</div><div class="idx-desc">DigitOracle® · regulatory compression · RAG</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="s-footer anim a7">
+    <div class="footer-meta"><strong>Confidential</strong> · C-Suite Briefing · March 2026 · DigitAlchemy® × Medialogic Joint Venture</div>
+    <div class="slide-id"><span>01</span> / 03</div>
+  </div>
+</div>
+
+<!-- ════════════════ SLIDE 2 ════════════════ -->
+<div class="slide" id="slide-2">
+  <div class="top-bar"><div class="tb-navy"></div><div class="tb-red"></div></div>
+  <div class="s2-header anim a1">
+    <div>
+      <div class="s-eyebrow">Delivery Framework</div>
+      <div class="s-title">Project Timeline & Milestone Gates</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:24px;">
+      <div class="legend">
+        <div class="legend-item"><div class="ld m1"></div><div class="ll">M1 Infrastructure</div></div>
+        <div class="legend-item"><div class="ld m2"></div><div class="ll">M2 AI Integration</div></div>
+        <div class="legend-item"><div class="ld m3"></div><div class="ll">M3 Production</div></div>
+        <div class="legend-item"><div class="ld sc"></div><div class="ll">Sales Centre</div></div>
+        <div class="legend-item"><div class="ld gate"></div><div class="ll">Milestone Gate</div></div>
+      </div>
+      <div style="width:1px;height:24px;background:var(--rule);"></div>
+      <div class="slide-id"><span>02</span> / 03</div>
+    </div>
+  </div>
+
+  <div class="s2-body">
+
+    <!-- AXIS — 42 days -->
+    <div class="axis-row anim a2">
+      <div></div>
+      <div class="axis-track">
+        <div class="ax wk">D1</div><div class="ax">2</div><div class="ax">3</div><div class="ax">4</div><div class="ax">5</div><div class="ax">6</div><div class="ax">7</div>
+        <div class="ax wk">W2·8</div><div class="ax">9</div><div class="ax">10</div><div class="ax">11</div><div class="ax">12</div><div class="ax">13</div><div class="ax">14</div>
+        <div class="ax wk">W3·15</div><div class="ax">16</div><div class="ax">17</div><div class="ax">18</div><div class="ax">19</div><div class="ax">20</div><div class="ax">21</div>
+        <div class="ax wk">W4·22</div><div class="ax">23</div><div class="ax">24</div><div class="ax">25</div><div class="ax">26</div><div class="ax">27</div><div class="ax">28</div>
+        <div class="ax wk">W5·29</div><div class="ax">30</div><div class="ax">31</div><div class="ax">32</div><div class="ax">33</div><div class="ax">34</div><div class="ax">35</div>
+        <div class="ax wk">W6·36</div><div class="ax">37</div><div class="ax">38</div><div class="ax">39</div><div class="ax">40</div><div class="ax">41</div><div class="ax">42</div>
+      </div>
+    </div>
+
+    <!-- TRACK 1 -->
+    <div class="track-hdr anim a3">
+      <div><div class="track-name">Track 1 · AI Avatar · Innovation Lab</div><div class="track-sub">21 Days · 3 Milestones · UAT · Hypercare</div></div>
+      <div class="track-rule"></div>
+    </div>
+
+    <div class="ph-row anim a3">
+      <div class="ph-label">Ph 1–5 · Infrastructure</div>
+      <div class="ph-grid">
+        <div class="bar b1" style="left:0;width:calc(7/42*100%);background:#190A46;"><span>M1 · Ph 1–5</span></div>
+      </div>
+    </div>
+
+    <div class="gate-row anim a3">
+      <div></div>
+      <div class="gate-track">
+        <div class="gate-diamond" style="left:calc(7/42*100%);background:var(--gate);"></div>
+        
+      </div>
+    </div>
+
+    <div class="ph-row anim a4">
+      <div class="ph-label">Ph 6–10 · AI & Integration</div>
+      <div class="ph-grid">
+        <div class="bar b2" style="left:calc(7/42*100%);width:calc(7/42*100%);background:#2D1A7A;"><span>M2 · Ph 6–10</span></div>
+      </div>
+    </div>
+
+    <div class="gate-row anim a4">
+      <div></div>
+      <div class="gate-track">
+        <div class="gate-diamond" style="left:calc(14/42*100%);background:var(--gate);"></div>
+        <div class="gate-txt" style="left:calc(14/42*100% + 14px);color:var(--gate);">M2 Accepted</div>
+      </div>
+    </div>
+
+    <div class="ph-row anim a5">
+      <div class="ph-label">Ph 11–15 · Production</div>
+      <div class="ph-grid">
+        <div class="bar b3" style="left:calc(14/42*100%);width:calc(5/42*100%);background:#4A2DB0;"><span>M3 · Ph 11–15</span></div>
+      </div>
+    </div>
+
+    <div class="ph-row anim a5">
+      <div class="ph-label">UAT & Staff Training</div>
+      <div class="ph-grid">
+        <div class="bar b3" style="left:calc(19/42*100%);width:calc(2/42*100%);background:#190A46;opacity:0.4;"><span>UAT</span></div>
+      </div>
+    </div>
+
+    <div class="gate-row anim a5">
+      <div></div>
+      <div class="gate-track">
+        <div class="gate-diamond" style="left:calc(21/42*100%);background:var(--navy);"></div>
+        <div class="gate-txt" style="left:calc(21/42*100% + 14px);color:var(--navy);">Track 1 Live · Day 21</div>
+        <div style="position:absolute;left:calc(21/42*100% + 14px);top:22px;font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.08em;white-space:nowrap;">3 weeks to live · +1 week hypercare included</div>
+      </div>
+    </div>
+
+    <div class="ph-row anim a5">
+      <div class="ph-label">Hypercare</div>
+      <div class="ph-grid">
+        <div class="bar b3" style="left:calc(21/42*100%);width:calc(7/42*100%);background:#190A46;opacity:0.2;"><span>Hypercare · Days 22–28</span></div>
+      </div>
+    </div>
+
+    <!-- TRACK 2 -->
+    <div class="track-hdr anim a6">
+      <div><div class="track-name red">Track 2 · AI Avatar · Sales Centre</div><div class="track-sub">Begins Day 12 · 21 Days · 3 Milestones · UAT · Hypercare</div></div>
+      <div class="track-rule red-rule"></div>
+    </div>
+
+    <div class="ph-row anim a6">
+      <div class="ph-label">Ph 1–5 · Infrastructure</div>
+      <div class="ph-grid">
+        <div class="bar" style="left:calc(11/42*100%);width:calc(7/42*100%);background:var(--red);"><span>M1 · Ph 1–5</span></div>
+      </div>
+    </div>
+
+    <div class="gate-row anim a6">
+      <div></div>
+      <div class="gate-track">
+        <div class="gate-diamond" style="left:calc(18/42*100%);background:var(--gate);"></div>
+        <div class="gate-txt" style="left:calc(18/42*100% + 14px);color:var(--gate);">M1 Accepted · Mobilisation Begins</div>
+      </div>
+    </div>
+
+    <div class="ph-row anim a7">
+      <div class="ph-label">Ph 6–10 · AI & Integration</div>
+      <div class="ph-grid">
+        <div class="bar" style="left:calc(18/42*100%);width:calc(6/42*100%);background:#C8102E;opacity:0.75;"><span>M2 · Ph 6–10</span></div>
+      </div>
+    </div>
+
+    <div class="gate-row anim a7">
+      <div></div>
+      <div class="gate-track">
+        <div class="gate-diamond" style="left:calc(24/42*100%);background:var(--gate);"></div>
+        <div class="gate-txt" style="left:calc(24/42*100% + 14px);color:var(--gate);">M2 Accepted</div>
+      </div>
+    </div>
+
+    <div class="ph-row anim a8">
+      <div class="ph-label">Ph 11–15 · Production</div>
+      <div class="ph-grid">
+        <div class="bar" style="left:calc(24/42*100%);width:calc(5/42*100%);background:#C8102E;opacity:0.55;"><span>M3 · Ph 11–15</span></div>
+      </div>
+    </div>
+
+    <div class="ph-row anim a8">
+      <div class="ph-label">UAT & Staff Training</div>
+      <div class="ph-grid">
+        <div class="bar" style="left:calc(29/42*100%);width:calc(2/42*100%);background:var(--red);opacity:0.35;"><span>UAT</span></div>
+      </div>
+    </div>
+
+    <div class="gate-row anim a8">
+      <div></div>
+      <div class="gate-track">
+        <div class="gate-diamond" style="left:calc(31/42*100%);background:var(--red);"></div>
+        <div class="gate-txt" style="left:calc(31/42*100% + 14px);color:var(--red);">Track 2 Live · Day 32</div>
+        <div style="position:absolute;left:calc(31/42*100% + 14px);top:22px;font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.08em;white-space:nowrap;">3 weeks from start · +1 week hypercare included</div>
+      </div>
+    </div>
+
+    <div class="ph-row anim a8">
+      <div class="ph-label">Hypercare</div>
+      <div class="ph-grid">
+        <div class="bar" style="left:calc(31/42*100%);width:calc(7/42*100%);background:var(--red);opacity:0.15;"><span>Hypercare · Days 33–39</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="s-footer anim a9">
+    <div class="footer-meta"><strong>Note:</strong> Both tracks run concurrently · Track 2 begins Day 12 · Each track includes UAT, staff training, and hypercare · Timelines subject to client data access and integration readiness</div>
+    <div class="slide-id"><span>02</span> / 09</div>
+  </div>
+</div>
+
+<!-- ════════════════ SLIDE 3 ════════════════ -->
+<div class="slide" id="slide-3">
+  <div class="top-bar"><div class="tb-navy"></div><div class="tb-red"></div></div>
+  <div class="s2-header anim a1">
+    <div><div class="s-eyebrow">Platform Intelligence Map</div><div class="s-title">Capability Overview</div></div>
+    <div class="slide-id"><span>03</span> / 09</div>
+  </div>
+
+  <div style="flex:1;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);gap:1px;background:var(--rule);overflow:hidden;margin:0 72px 0 72px;padding-bottom:20px;">
+
+    <!-- ACTIVE: Card 1 → Slide 4 -->
+    <div class="domain-card anim a2" onclick="goTo(4)">
+      <div class="dc-num">01</div>
+      <div class="dc-title">CRM & Sales Intelligence</div>
+      <div class="dc-desc">Lead capture · Salesforce · DLD transaction data · unit availability · buyer engagement</div>
+      <div class="dc-arrow">→</div>
+    </div>
+
+    <!-- ACTIVE: Card 2 → Slide 5 -->
+    <div class="domain-card anim a2" onclick="goTo(5)">
+      <div class="dc-num">02</div>
+      <div class="dc-title">Reception & Identity</div>
+      <div class="dc-desc">Visitor mgmt · badge issuance · biometrics · access control · presence detection</div>
+      <div class="dc-arrow">→</div>
+    </div>
+
+    <!-- ACTIVE: Card 3 → Slide 5 -->
+    <div class="domain-card anim a3" onclick="goTo(5)">
+      <div class="dc-num">03</div>
+      <div class="dc-title">Calendar & Comms</div>
+      <div class="dc-desc">MS Teams · Outlook · room booking · meeting scheduling · visitor notifications</div>
+      <div class="dc-arrow">→</div>
+    </div>
+
+    <!-- ACTIVE: Card 4 → Slide 6 -->
+    <div class="domain-card anim a3" onclick="goTo(6)">
+      <div class="dc-num">04</div>
+      <div class="dc-title">Document & Compliance</div>
+      <div class="dc-desc">DigitOracle® · SPA compliance · DLD submissions · RERA · regulatory compression</div>
+      <div class="dc-arrow">→</div>
+    </div>
+
+    <!-- ACTIVE: Card 5 → Slide 7 -->
+    <div class="domain-card anim a4" onclick="goTo(7)">
+      <div class="dc-num">05</div>
+      <div class="dc-title">BIM & Digital Twin</div>
+      <div class="dc-desc">Revit · IFC · live model queries · unit status · handover & snagging intelligence</div>
+      <div class="dc-arrow">→</div>
+    </div>
+
+    <!-- ACTIVE: Card 6 → Slide 7 -->
+    <div class="domain-card anim a4" onclick="goTo(7)">
+      <div class="dc-num">06</div>
+      <div class="dc-title">GIS & Spatial</div>
+      <div class="dc-desc">ArcGIS · site plans · asset location · location intelligence · master plan queries</div>
+      <div class="dc-arrow">→</div>
+    </div>
+
+    <!-- ACTIVE: Card 7 → Slide 8 -->
+    <div class="domain-card anim a5" onclick="goTo(8)">
+      <div class="dc-num">07</div>
+      <div class="dc-title">Construction Mgmt</div>
+      <div class="dc-desc">Procore · Aconex · RFI · site briefings · contractor queries · progress monitoring</div>
+      <div class="dc-arrow">→</div>
+    </div>
+
+    <!-- ACTIVE: Card 8 → Slide 8 -->
+    <div class="domain-card anim a5" onclick="goTo(8)">
+      <div class="dc-num">08</div>
+      <div class="dc-title">FM & IoT</div>
+      <div class="dc-desc">CAFM · BMS · VIPER® sensors · smart building · predictive maintenance</div>
+      <div class="dc-arrow">→</div>
+    </div>
+
+    <!-- PHASE 2: Card 9 — no navigation -->
+    <div class="domain-card phase2 anim a6">
+      <div class="dc-num">09</div>
+      <div class="dc-title">Analytics & BI</div>
+      <div class="dc-desc">Power BI · dashboards · investor reporting · occupancy analytics · market benchmarks</div>
+      <div class="dc-phase">Phase 2</div>
+    </div>
+
+    <!-- PHASE 2: Card 10 — no navigation -->
+    <div class="domain-card phase2 anim a6">
+      <div class="dc-num">10</div>
+      <div class="dc-title">AI & Knowledge</div>
+      <div class="dc-desc">DigitOracle® RAG · regulatory intelligence · portfolio knowledge graph · predictive AI</div>
+      <div class="dc-phase">Phase 2</div>
+    </div>
+
+    <!-- PHASE 2: Card 11 — no navigation -->
+    <div class="domain-card phase2 anim a7">
+      <div class="dc-num">11</div>
+      <div class="dc-title">ERP & Finance</div>
+      <div class="dc-desc">Oracle Exadata · SAP · financial queries · cost reporting · TTM-06 feasibility</div>
+      <div class="dc-phase">Phase 2</div>
+    </div>
+
+    <!-- PHASE 2: Card 12 — no navigation -->
+    <div class="domain-card phase2 anim a7">
+      <div class="dc-num">12</div>
+      <div class="dc-title">HR & People</div>
+      <div class="dc-desc">Active Directory · onboarding · identity management · staff briefings · org queries</div>
+      <div class="dc-phase">Phase 2</div>
+    </div>
+
+  </div>
+
+  <div class="s-footer anim a8">
+    <div class="footer-meta"><strong>Select any domain</strong> to explore data inputs, avatar outputs, and integration architecture · DigitAlchemy® × Medialogic · Confidential · March 2026</div>
+    <div class="slide-id"><span>03</span> / 09</div>
+  </div>
+</div>
+
+<!-- ════════════════ SLIDE 4 — CRM & SALES INTELLIGENCE ════════════════ -->
+<div class="slide" id="slide-4">
+
+  <!-- VIDEO: position:absolute so it doesn't participate in flex layout -->
+  <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;">
+    <source src="slide4-crm-bg.mp4" type="video/mp4"/>
+  </video>
+  <!-- OVERLAY: sits above video, below content -->
+  <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:rgba(255,255,255,0.45);"></div>
+
+  <!-- TOP BAR: direct child of .slide flex column, z-index above overlay -->
+  <div class="top-bar" style="position:relative;z-index:2;flex-shrink:0;"><div class="tb-navy"></div><div class="tb-red"></div></div>
+
+  <!-- HEADER: direct child -->
+  <div class="anim a1" style="position:relative;z-index:2;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:16px 72px;border-bottom:1px solid rgba(25,10,70,0.15);">
+    <div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px;">Domain 04 · CRM & Sales Intelligence</div>
+      <div style="font-family:var(--sans);font-size:26px;font-weight:800;color:var(--navy);letter-spacing:-0.02em;line-height:1;">The Avatar as Your Best Sales Agent</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;">Salesforce · DLD API · Oracle CRM · MS Exchange</div>
+      <div style="width:1px;height:24px;background:var(--rule);"></div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--muted);"><span style="color:var(--navy);font-weight:700;">04</span> / 09</div>
+    </div>
+  </div>
+
+  <!-- FLOWCHART ZONE: flex:1 + min-height:0 = fills all remaining space -->
+  <div style="position:relative;z-index:2;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:16px 52px;">
+    <svg class="anim a2" viewBox="0 0 1100 300" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;">
+      <defs>
+        <linearGradient id="s4lg" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#4A2DB0" stop-opacity="0.9"/>
+          <stop offset="100%" stop-color="#C8102E" stop-opacity="0.9"/>
+        </linearGradient>
+        <linearGradient id="s4ll" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#2D1A7A"/><stop offset="100%" stop-color="#190A46"/>
+        </linearGradient>
+        <linearGradient id="s4lb" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#190A46"/><stop offset="100%" stop-color="#08031a"/>
+        </linearGradient>
+        <linearGradient id="s4lr" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#9B0F23"/><stop offset="100%" stop-color="#C8102E"/>
+        </linearGradient>
+        <filter id="s4glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="6" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <marker id="s4arr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 Z" fill="#C8102E" opacity="0.85"/>
+        </marker>
+      </defs>
+
+      <!-- COLUMN LABELS -->
+      <text x="140" y="14" font-family="'DM Mono',monospace" font-size="9" fill="#999" letter-spacing="2" text-anchor="middle">DATA SOURCES</text>
+      <text x="550" y="14" font-family="'DM Mono',monospace" font-size="9" fill="#999" letter-spacing="2" text-anchor="middle">AVATAR BRAIN</text>
+      <text x="960" y="14" font-family="'DM Mono',monospace" font-size="9" fill="#999" letter-spacing="2" text-anchor="middle">OUTPUTS</text>
+
+      <!-- LEFT NODES -->
+      <rect x="8" y="24" width="264" height="52" rx="3" fill="url(#s4ll)" stroke="rgba(74,45,176,0.5)" stroke-width="1"/>
+      <rect x="8" y="24" width="3" height="52" fill="#4A2DB0"/>
+      <text x="26" y="46" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">Salesforce CRM</text>
+      <text x="26" y="63" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">Lead records · Pipeline · Contacts</text>
+
+      <rect x="8" y="86" width="264" height="52" rx="3" fill="url(#s4ll)" stroke="rgba(74,45,176,0.5)" stroke-width="1"/>
+      <rect x="8" y="86" width="3" height="52" fill="#C8102E"/>
+      <text x="26" y="108" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">DLD Transactions API</text>
+      <text x="26" y="125" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">Live sales · Pricing · Market data</text>
+
+      <rect x="8" y="148" width="264" height="52" rx="3" fill="url(#s4ll)" stroke="rgba(74,45,176,0.5)" stroke-width="1"/>
+      <rect x="8" y="148" width="3" height="52" fill="#F0A500"/>
+      <text x="26" y="170" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">Oracle CRM · Exchange</text>
+      <text x="26" y="187" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">Unit availability · Agent calendars</text>
+
+      <rect x="8" y="210" width="264" height="52" rx="3" fill="url(#s4ll)" stroke="rgba(74,45,176,0.5)" stroke-width="1"/>
+      <rect x="8" y="210" width="3" height="52" fill="#4A2DB0"/>
+      <text x="26" y="232" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">RERA Rental Index</text>
+      <text x="26" y="249" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">Yield projections · Comparables</text>
+
+      <!-- CONNECTORS L→C -->
+      <line x1="272" y1="50"  x2="398" y2="138" stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7"/>
+      <line x1="272" y1="112" x2="398" y2="152" stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7"/>
+      <line x1="272" y1="174" x2="398" y2="162" stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7"/>
+      <line x1="272" y1="236" x2="398" y2="172" stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7"/>
+
+      <!-- BRAIN -->
+      <rect x="398" y="84" width="304" height="138" rx="4" fill="url(#s4lb)" stroke="#C8102E" stroke-width="1.5" filter="url(#s4glow)"/>
+      <rect x="403" y="89" width="294" height="128" rx="3" fill="none" stroke="rgba(200,16,46,0.2)" stroke-width="1"/>
+      <text x="550" y="114" font-family="'DM Mono',monospace" font-size="8" fill="#C8102E" letter-spacing="3" text-anchor="middle">AVATAR BRAIN</text>
+      <text x="550" y="142" font-family="'Syne',sans-serif" font-size="20" font-weight="800" fill="#fff" text-anchor="middle">RAG + Fine-Tune</text>
+      <line x1="425" y1="157" x2="675" y2="157" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <rect x="413" y="164" width="122" height="28" rx="2" fill="rgba(74,45,176,0.55)" stroke="#4A2DB0" stroke-width="1"/>
+      <text x="474" y="182" font-family="'DM Mono',monospace" font-size="9" fill="#fff" text-anchor="middle">Layer 1 · RAG</text>
+      <rect x="565" y="164" width="122" height="28" rx="2" fill="rgba(200,16,46,0.22)" stroke="#C8102E" stroke-width="1"/>
+      <text x="626" y="182" font-family="'DM Mono',monospace" font-size="9" fill="#fff" text-anchor="middle">Layer 2 · Fine-Tune</text>
+
+
+      <!-- CONNECTORS C→R -->
+      <line x1="702" y1="138" x2="828" y2="50"  stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7" marker-end="url(#s4arr)"/>
+      <line x1="702" y1="152" x2="828" y2="112" stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7" marker-end="url(#s4arr)"/>
+      <line x1="702" y1="162" x2="828" y2="174" stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7" marker-end="url(#s4arr)"/>
+      <line x1="702" y1="172" x2="828" y2="236" stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7" marker-end="url(#s4arr)"/>
+
+      <!-- RIGHT NODES -->
+      <rect x="828" y="24" width="264" height="52" rx="3" fill="url(#s4lr)" stroke="rgba(200,16,46,0.5)" stroke-width="1"/>
+      <rect x="1089" y="24" width="3" height="52" fill="#C8102E"/>
+      <text x="846" y="46" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">Conversational</text>
+      <text x="846" y="63" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">Units · availability · payment plans</text>
+
+      <rect x="828" y="86" width="264" height="52" rx="3" fill="url(#s4lr)" stroke="rgba(200,16,46,0.5)" stroke-width="1"/>
+      <rect x="1089" y="86" width="3" height="52" fill="#F0A500"/>
+      <text x="846" y="108" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">Generative</text>
+      <text x="846" y="125" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">Proposals · payment summaries</text>
+
+      <rect x="828" y="148" width="264" height="52" rx="3" fill="url(#s4lr)" stroke="rgba(200,16,46,0.5)" stroke-width="1"/>
+      <rect x="1089" y="148" width="3" height="52" fill="#4A2DB0"/>
+      <text x="846" y="170" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">Analytical</text>
+      <text x="846" y="187" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">DLD comparables · yield projections</text>
+
+      <rect x="828" y="210" width="264" height="52" rx="3" fill="url(#s4lr)" stroke="rgba(200,16,46,0.5)" stroke-width="1"/>
+      <rect x="1089" y="210" width="3" height="52" fill="#C8102E"/>
+      <text x="846" y="232" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">Action</text>
+      <text x="846" y="249" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">Books viewings · creates SF leads</text>
+
+    </svg>
+  </div>
+
+  <!-- STAT PILLS: direct child, fixed height -->
+  <div class="anim a6" style="position:relative;z-index:2;flex-shrink:0;display:flex;gap:10px;padding:0 52px 12px;">
+    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:10px 16px;background:rgba(255,255,255,0.82);border:1px solid rgba(25,10,70,0.14);backdrop-filter:blur(10px);">
+      <div style="font-family:var(--sans);font-size:24px;font-weight:800;color:var(--navy);">32%</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--mid);line-height:1.5;">more deals closed<br/>AI-powered lead scoring</div>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:10px 16px;background:rgba(255,255,255,0.82);border:1px solid rgba(200,16,46,0.18);backdrop-filter:blur(10px);">
+      <div style="font-family:var(--sans);font-size:24px;font-weight:800;color:var(--red);">30%</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--mid);line-height:1.5;">agent time freed<br/>by AI avatar queries</div>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:10px 16px;background:rgba(255,255,255,0.82);border:1px solid rgba(240,165,0,0.25);backdrop-filter:blur(10px);">
+      <div style="font-family:var(--sans);font-size:24px;font-weight:800;color:var(--gate);">&lt;30s</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--mid);line-height:1.5;">response time<br/>5 min window to close</div>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:10px 16px;background:rgba(255,255,255,0.82);border:1px solid rgba(25,10,70,0.14);backdrop-filter:blur(10px);">
+      <div style="font-family:var(--sans);font-size:24px;font-weight:800;color:var(--navy);">24/7</div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--mid);line-height:1.5;">revenue intelligence<br/>no agent required</div>
+    </div>
+  </div>
+
+  <!-- HERO STATEMENT: direct child, fixed height -->
+  <div class="anim a7" style="position:relative;z-index:2;flex-shrink:0;background:var(--navy);padding:15px 72px;display:flex;align-items:center;justify-content:space-between;">
+    <div style="font-family:var(--sans);font-size:17px;font-weight:700;color:#fff;letter-spacing:-0.01em;">From first inquiry to signed deal — the avatar handles everything in between.</div>
+    <div style="display:flex;align-items:center;gap:20px;flex-shrink:0;">
+      <div style="font-family:var(--mono);font-size:9px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;" onclick="goTo(3)">← Capability Overview</div>
+      <div style="font-family:var(--mono);font-size:10px;color:rgba(255,255,255,0.4);"><span style="color:#fff;font-weight:700;">04</span> / 09</div>
+    </div>
+  </div>
+
+</div>
+
+</div><!-- /slides-wrapper -->
+<div class="nav-sidebar left">
+  <button class="nav-btn" id="btn-prev-l" onclick="navigate(-1)" disabled>← Prev</button>
+  <div class="nav-dots" id="dots-l">
+    <div class="nav-dot active" onclick="goTo(1)"></div>
+    <div class="nav-dot" onclick="goTo(2)"></div>
+    <div class="nav-dot" onclick="goTo(3)"></div>
+    <div class="nav-dot" onclick="goTo(4)"></div>
+    <div class="nav-dot" onclick="goTo(5)"></div>
+    <div class="nav-dot" onclick="goTo(6)"></div>
+    <div class="nav-dot" onclick="goTo(7)"></div>
+    <div class="nav-dot" onclick="goTo(8)"></div>
+    <div class="nav-dot" onclick="goTo(9)"></div>
+  </div>
+  <button class="nav-btn" id="btn-next-l" onclick="navigate(1)">Next →</button>
+</div>
+
+<!-- RIGHT NAV -->
+<div class="nav-sidebar right">
+  <button class="nav-btn" id="btn-prev-r" onclick="navigate(-1)" disabled>← Prev</button>
+  <div class="nav-dots" id="dots-r">
+    <div class="nav-dot active" onclick="goTo(1)"></div>
+    <div class="nav-dot" onclick="goTo(2)"></div>
+    <div class="nav-dot" onclick="goTo(3)"></div>
+    <div class="nav-dot" onclick="goTo(4)"></div>
+    <div class="nav-dot" onclick="goTo(5)"></div>
+    <div class="nav-dot" onclick="goTo(6)"></div>
+    <div class="nav-dot" onclick="goTo(7)"></div>
+    <div class="nav-dot" onclick="goTo(8)"></div>
+    <div class="nav-dot" onclick="goTo(9)"></div>
+  </div>
+  <button class="nav-btn" id="btn-next-r" onclick="navigate(1)">Next →</button>
+</div>
+
+<!-- HIDDEN ORIGINAL NAV (keeps JS working) -->
+<div class="nav" style="display:none;">
+  <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>← Prev</button>
+  <div class="nav-div"></div>
+  <div class="nav-counter" id="counter"><span>1</span> / 3</div>
+  <div class="nav-div"></div>
+  <button class="nav-btn" id="btn-next" onclick="navigate(1)">Next →</button>
+</div>
+
+</div><!-- /deck -->
+<script>
+  let current = 1;
+  const total = 9;
+
+  function updateNav() {
+    const disabled = current === 1;
+    const atEnd = current === total;
+    ['btn-prev-l','btn-prev-r','btn-prev'].forEach(id => { const el = document.getElementById(id); if(el) el.disabled = disabled; });
+    ['btn-next-l','btn-next-r','btn-next'].forEach(id => { const el = document.getElementById(id); if(el) el.disabled = atEnd; });
+    ['dots-l','dots-r'].forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.querySelectorAll('.nav-dot').forEach((d,i) => d.classList.toggle('active', i+1 === current));
+    });
+    const counter = document.getElementById('counter');
+    if(counter) counter.innerHTML = '<span>' + current + '</span> / ' + total;
+  }
+
+  function goTo(n) {
+    if(n === current) return;
+    const prev = current;
+    current = n;
+    const prevSlide = document.getElementById('slide-' + prev);
+    const nextSlide = document.getElementById('slide-' + current);
+    prevSlide.classList.remove('active');
+    prevSlide.classList.add('exit-left');
+    setTimeout(() => prevSlide.classList.remove('exit-left'), 400);
+    nextSlide.querySelectorAll('.anim, .bar').forEach(el => { el.style.animation='none'; el.offsetHeight; el.style.animation=''; });
+    nextSlide.classList.add('active');
+    updateNav();
+  }
+
+  function navigate(dir) {
+    const next = Math.max(1, Math.min(total, current + dir));
+    goTo(next);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+  });
+</script>
+</body>
+</html>
