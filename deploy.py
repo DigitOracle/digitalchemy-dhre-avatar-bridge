@@ -52,26 +52,25 @@ def update_video_src(old_src, new_src):
     return True
 
 
-def deploy_prod():
-    """Run vercel --prod and print the live URL."""
-    print("[deploy] Running vercel --prod ...")
+def git_commit_and_push(filename):
+    """git add -A, commit, and push."""
+    msg = f"auto-deploy: {filename}"
+    print(f"[deploy] Committing: {msg}")
+    cmd = f'git add -A && git commit -m "{msg}" && git push'
     result = subprocess.run(
-        "vercel --prod --yes",
+        cmd,
         cwd=PROJECT_DIR,
         capture_output=True,
         text=True,
         shell=True,
     )
     if result.returncode == 0:
+        print(f"[deploy] Pushed successfully.")
         for line in result.stdout.splitlines():
-            line = line.strip()
-            if line.startswith("https://") and "vercel.app" in line:
-                print(f"[deploy] Live URL: {line}")
-                return
-        print("[deploy] Deployed successfully.")
-        print(result.stdout)
+            if "->" in line:
+                print(f"[deploy] {line.strip()}")
     else:
-        print("[deploy] Deployment failed:")
+        print("[deploy] Git push failed:")
         print(result.stderr or result.stdout)
 
 
@@ -101,7 +100,7 @@ class DeployHandler(FileSystemEventHandler):
                 time.sleep(1)
                 print(f"[deploy] Copying to {INDEX_FILE}")
                 shutil.copy2(src, INDEX_FILE)
-                deploy_prod()
+                git_commit_and_push("index.html")
                 return
 
             # --- .mp4 handler ---
@@ -121,7 +120,7 @@ class DeployHandler(FileSystemEventHandler):
                 new_name = f"slide{n}-{slug}-bg.mp4"
                 dest = os.path.join(PROJECT_DIR, new_name)
 
-                print(f"[deploy] Renaming → {new_name}")
+                print(f"[deploy] Renaming -> {new_name}")
                 shutil.copy2(src, dest)
 
                 # Find the most recent existing video src in index.html to replace
@@ -131,12 +130,12 @@ class DeployHandler(FileSystemEventHandler):
                 src_matches = re.findall(r'<source\s+src="([^"]*\.mp4)"', html)
                 if src_matches:
                     old_src = src_matches[-1]  # replace the last one found
-                    print(f"[deploy] Updating index.html: {old_src} → {new_name}")
+                    print(f"[deploy] Updating index.html: {old_src} -> {new_name}")
                     update_video_src(old_src, new_name)
                 else:
                     print(f"[deploy] No <source src=*.mp4> in index.html to update")
 
-                deploy_prod()
+                git_commit_and_push(new_name)
 
                 # Allow this file to be handled again if re-downloaded
                 self._handled.discard(key)
