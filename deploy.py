@@ -157,15 +157,25 @@ def poll_index_html(stop_event):
 
     while not stop_event.is_set():
         try:
-            if os.path.exists(downloads_index) and os.path.exists(INDEX_FILE):
+            if os.path.exists(downloads_index):
                 dl_mtime = os.path.getmtime(downloads_index)
-                proj_mtime = os.path.getmtime(INDEX_FILE)
-                if dl_mtime > proj_mtime:
-                    print(f"\n[deploy] [poller] Downloads/index.html is newer (dl={dl_mtime:.0f} > proj={proj_mtime:.0f})")
+                age = time.time() - dl_mtime
+                should_deploy = False
+
+                if os.path.exists(INDEX_FILE):
+                    proj_mtime = os.path.getmtime(INDEX_FILE)
+                    if dl_mtime > proj_mtime:
+                        print(f"\n[deploy] [poller] Downloads/index.html is newer (dl={dl_mtime:.0f} > proj={proj_mtime:.0f})")
+                        should_deploy = True
+                    elif age <= 60:
+                        print(f"\n[deploy] [poller] Downloads/index.html modified {age:.0f}s ago (within 60s window)")
+                        should_deploy = True
+                else:
+                    print(f"\n[deploy] [poller] Downloads/index.html found, project missing - deploying")
+                    should_deploy = True
+
+                if should_deploy:
                     deploy_index(downloads_index)
-            elif os.path.exists(downloads_index) and not os.path.exists(INDEX_FILE):
-                print(f"\n[deploy] [poller] Downloads/index.html found, project missing - deploying")
-                deploy_index(downloads_index)
         except Exception:
             print("[deploy] [poller] Error:")
             traceback.print_exc()
