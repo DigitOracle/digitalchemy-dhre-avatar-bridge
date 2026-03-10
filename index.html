@@ -250,12 +250,11 @@ html, body {
 .nav-sidebar.left { left: 0; border-left: none; border-radius: 0 6px 6px 0; }
 .nav-sidebar.right { right: 0; border-right: none; border-radius: 6px 0 0 6px; }
 .nav-btn {
-  font-family: var(--mono); font-size: 9px; color: var(--navy);
+  font-family: var(--mono); font-size: 13px; color: var(--navy);
   background: none; border: none; cursor: pointer;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  writing-mode: vertical-rl; padding: 4px 2px;
-  transition: opacity 0.15s;
+  padding: 4px 2px; transition: opacity 0.15s; line-height: 1;
 }
+.nav-btn:hover { opacity: 0.6; }
 .nav-btn:disabled { opacity: 0.2; cursor: default; }
 .nav-dots { display: flex; flex-direction: column; align-items: center; gap: 6px; }
 .nav-dot {
@@ -266,13 +265,6 @@ html, body {
 .nav-dot.active { background: var(--navy); }
 .nav-counter { display: none; }
 .nav-div { display: none; }
-.nav-btn { font-family: var(--mono); font-size: 11px; color: var(--navy); background: none; border: none; cursor: pointer; padding: 4px 14px; letter-spacing: 0.1em; text-transform: uppercase; transition: background 0.15s; }
-.nav-btn:hover { background: var(--navy-bg); }
-.nav-btn:disabled { color: var(--rule); cursor: default; }
-.nav-btn:disabled:hover { background: none; }
-.nav-counter { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; min-width: 52px; text-align: center; }
-.nav-counter span { color: var(--navy); font-weight: 700; }
-.nav-div { width: 1px; height: 18px; background: var(--rule); }
 
 /* ══════════════════════════════════
    ANIMATIONS
@@ -827,6 +819,173 @@ html, body {
   </div>
 
 </div>
+
+<!-- ════════════════ SLIDE 5 — RECEPTION & IDENTITY ════════════════ -->
+<div class="slide" id="slide-5" style="background:#f7f6fc;">
+
+  <!-- VIDEO: full bleed background -->
+  <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;">
+    <source src="slide5-reception-bg.mp4" type="video/mp4"/>
+  </video>
+  <!-- LIGHT OVERLAY -->
+  <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:rgba(247,246,252,0.82);"></div>
+
+  <!-- TOP BAR -->
+  <div class="top-bar" style="position:relative;z-index:2;flex-shrink:0;"><div class="tb-navy"></div><div class="tb-red"></div></div>
+
+  <!-- HEADER -->
+  <div class="anim a1" style="position:relative;z-index:2;flex-shrink:0;display:flex;align-items:flex-start;justify-content:space-between;padding:12px 64px 10px;border-bottom:1px solid rgba(25,10,70,0.10);">
+    <div>
+      <div style="font-family:var(--mono);font-size:9.5px;color:var(--red);letter-spacing:0.22em;text-transform:uppercase;margin-bottom:3px;">Domain 05 · Reception & Identity · UAE Real Estate · DHRE Example</div>
+      <div style="font-family:var(--sans);font-size:23px;font-weight:800;color:var(--navy);letter-spacing:-0.02em;line-height:1.1;">The Avatar as Your Always-On Front Desk</div>
+      <div style="font-family:var(--mono);font-size:10px;font-weight:400;color:#6b6885;margin-top:4px;line-height:1.5;">Greets every visitor by name, verifies identity in seconds, and guides them — without a call to reception.</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;flex-shrink:0;padding-top:4px;">
+      <div style="font-family:var(--mono);font-size:9px;color:#aaa;letter-spacing:0.05em;">ACCESS CONTROL · KYC · CRM · DIRECTORY</div>
+      <div style="width:1px;height:22px;background:rgba(25,10,70,0.12);"></div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--muted);"><span style="color:var(--navy);font-weight:700;">05</span> / 09</div>
+    </div>
+  </div>
+
+  <!-- FLOWCHART ZONE -->
+  <div style="position:relative;z-index:2;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px 48px 6px;">
+    <svg class="anim a2" viewBox="0 0 1100 295" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;">
+      <defs>
+        <linearGradient id="s5lg" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#4A2DB0" stop-opacity="0.65"/>
+          <stop offset="100%" stop-color="#C8102E" stop-opacity="0.65"/>
+        </linearGradient>
+        <linearGradient id="s5ll" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#2D1A7A"/><stop offset="100%" stop-color="#190A46"/>
+        </linearGradient>
+        <linearGradient id="s5lb" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#1e0d5c"/><stop offset="100%" stop-color="#110535"/>
+        </linearGradient>
+        <linearGradient id="s5lr" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#8B0D1E"/><stop offset="100%" stop-color="#C8102E"/>
+        </linearGradient>
+        <filter id="s5glow" x="-10%" y="-10%" width="120%" height="120%">
+          <feGaussianBlur stdDeviation="2.5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <marker id="s5arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#C8102E" opacity="0.7"/>
+        </marker>
+      </defs>
+
+      <!-- COLUMN LABELS -->
+      <text x="140" y="13" font-family="'DM Mono',monospace" font-size="8.5" fill="#999" letter-spacing="2.5" text-anchor="middle">DATA FEEDS</text>
+      <text x="550" y="13" font-family="'DM Mono',monospace" font-size="8.5" fill="#999" letter-spacing="2.5" text-anchor="middle">VISITOR INTELLIGENCE ENGINE</text>
+      <text x="960" y="13" font-family="'DM Mono',monospace" font-size="8.5" fill="#999" letter-spacing="2.5" text-anchor="middle">DELIVERED OUTCOMES</text>
+
+      <!-- ── LEFT NODES ── -->
+      <rect x="8" y="22" width="264" height="58" rx="3" fill="url(#s5ll)" stroke="rgba(74,45,176,0.25)" stroke-width="1"/>
+      <rect x="8" y="22" width="3" height="58" fill="#4A2DB0" rx="1"/>
+      <text x="26" y="47" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">Access Control</text>
+      <text x="26" y="65" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">Door systems · badge · entry logs</text>
+
+      <rect x="8" y="90" width="264" height="58" rx="3" fill="url(#s5ll)" stroke="rgba(74,45,176,0.25)" stroke-width="1"/>
+      <rect x="8" y="90" width="3" height="58" fill="#C8102E" rx="1"/>
+      <text x="26" y="115" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">Identity &amp; KYC</text>
+      <text x="26" y="133" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">Emirates ID · passport · biometric</text>
+
+      <rect x="8" y="158" width="264" height="58" rx="3" fill="url(#s5ll)" stroke="rgba(74,45,176,0.25)" stroke-width="1"/>
+      <rect x="8" y="158" width="3" height="58" fill="#F0A500" rx="1"/>
+      <text x="26" y="183" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">CRM + Guest History</text>
+      <text x="26" y="201" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">Prior visits · preferences · VIP flags</text>
+
+      <rect x="8" y="226" width="264" height="58" rx="3" fill="url(#s5ll)" stroke="rgba(74,45,176,0.25)" stroke-width="1"/>
+      <rect x="8" y="226" width="3" height="58" fill="#4A2DB0" rx="1"/>
+      <text x="26" y="251" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">Building Directory</text>
+      <text x="26" y="269" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">Tenants · floors · meeting rooms</text>
+
+      <!-- ── CONNECTORS L→C ── -->
+      <line x1="272" y1="51"  x2="398" y2="143" stroke="url(#s5lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55"/>
+      <line x1="272" y1="119" x2="398" y2="158" stroke="url(#s5lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55"/>
+      <line x1="272" y1="187" x2="398" y2="168" stroke="url(#s5lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55"/>
+      <line x1="272" y1="255" x2="398" y2="178" stroke="url(#s5lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55"/>
+
+      <!-- ── BRAIN — Visitor Intelligence Engine ── -->
+      <rect x="398" y="84" width="304" height="148" rx="4" fill="url(#s5lb)" stroke="rgba(200,16,46,0.45)" stroke-width="1.5" filter="url(#s5glow)"/>
+      <rect x="402" y="88" width="296" height="140" rx="3" fill="none" stroke="rgba(200,16,46,0.1)" stroke-width="1"/>
+      <text x="550" y="112" font-family="'DM Mono',monospace" font-size="7.5" fill="rgba(200,16,46,0.85)" letter-spacing="2.5" text-anchor="middle">VISITOR INTELLIGENCE ENGINE</text>
+      <text x="550" y="155" font-family="'Syne',sans-serif" font-size="15" font-weight="800" fill="#ffffff" text-anchor="middle">Verified + Personalised + Compliant</text>
+      <line x1="420" y1="174" x2="680" y2="174" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <rect x="408" y="180" width="128" height="26" rx="2" fill="rgba(74,45,176,0.4)" stroke="rgba(74,45,176,0.5)" stroke-width="1"/>
+      <text x="472" y="197" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.8)" text-anchor="middle">RAG · Live Data</text>
+      <rect x="564" y="180" width="128" height="26" rx="2" fill="rgba(200,16,46,0.18)" stroke="rgba(200,16,46,0.45)" stroke-width="1"/>
+      <text x="628" y="197" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.8)" text-anchor="middle">Fine-Tune · Brand Voice</text>
+
+      <!-- ── CONNECTORS C→R ── -->
+      <line x1="702" y1="143" x2="828" y2="51"  stroke="url(#s5lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55" marker-end="url(#s5arr)"/>
+      <line x1="702" y1="158" x2="828" y2="119" stroke="url(#s5lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55" marker-end="url(#s5arr)"/>
+      <line x1="702" y1="168" x2="828" y2="187" stroke="url(#s5lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55" marker-end="url(#s5arr)"/>
+      <line x1="702" y1="178" x2="828" y2="255" stroke="url(#s5lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55" marker-end="url(#s5arr)"/>
+
+      <!-- ── RIGHT NODES ── -->
+      <rect x="828" y="22" width="264" height="58" rx="3" fill="url(#s5lr)" stroke="rgba(200,16,46,0.25)" stroke-width="1"/>
+      <rect x="1089" y="22" width="3" height="58" fill="#C8102E" rx="1"/>
+      <text x="846" y="47" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">Guest Check-In</text>
+      <text x="846" y="65" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">Verified · badged · notified in &lt;10s</text>
+
+      <rect x="828" y="90" width="264" height="58" rx="3" fill="url(#s5lr)" stroke="rgba(200,16,46,0.25)" stroke-width="1"/>
+      <rect x="1089" y="90" width="3" height="58" fill="#F0A500" rx="1"/>
+      <text x="846" y="115" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">VIP Recognition</text>
+      <text x="846" y="133" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">Personalised greeting · priority routing</text>
+
+      <rect x="828" y="158" width="264" height="58" rx="3" fill="url(#s5lr)" stroke="rgba(200,16,46,0.25)" stroke-width="1"/>
+      <rect x="1089" y="158" width="3" height="58" fill="#4A2DB0" rx="1"/>
+      <text x="846" y="183" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">Wayfinding &amp; Escort</text>
+      <text x="846" y="201" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">Floor maps · agent alert · digital guide</text>
+
+      <rect x="828" y="226" width="264" height="58" rx="3" fill="url(#s5lr)" stroke="rgba(200,16,46,0.25)" stroke-width="1"/>
+      <rect x="1089" y="226" width="3" height="58" fill="#C8102E" rx="1"/>
+      <text x="846" y="251" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">Incident &amp; Escalation</text>
+      <text x="846" y="269" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">Flag · log · alert security or host</text>
+
+    </svg>
+  </div>
+
+  <!-- HERO STATEMENT -->
+  <div class="anim a5" style="position:relative;z-index:2;flex-shrink:0;background:var(--navy);padding:11px 64px;display:flex;align-items:center;justify-content:space-between;">
+    <div style="font-family:var(--sans);font-size:15.5px;font-weight:700;color:#fff;letter-spacing:-0.01em;">Every visitor greeted by name, verified in seconds, and guided to the right place — without a single call to reception.</div>
+    <div style="font-family:var(--mono);font-size:8.5px;color:rgba(255,255,255,0.35);letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;flex-shrink:0;" onclick="goTo(3)">← Capability Overview</div>
+  </div>
+
+  <!-- STAT PILLS -->
+  <div class="anim a6" style="position:relative;z-index:2;flex-shrink:0;display:flex;gap:8px;padding:8px 48px 10px;">
+    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:9px 16px;background:rgba(255,255,255,0.90);border:1px solid rgba(25,10,70,0.10);">
+      <div style="font-family:var(--sans);font-size:23px;font-weight:800;color:var(--navy);line-height:1;">&lt;10s</div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:#3d3858;line-height:1.4;">full identity verification</div>
+        <div style="font-family:var(--mono);font-size:8px;color:#aaa;line-height:1.4;">Benchmark target · biometric + KYC</div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:9px 16px;background:rgba(255,255,255,0.90);border:1px solid rgba(200,16,46,0.12);">
+      <div style="font-family:var(--sans);font-size:23px;font-weight:800;color:var(--red);line-height:1;">0</div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:#3d3858;line-height:1.4;">missed visitors</div>
+        <div style="font-family:var(--mono);font-size:8px;color:#aaa;line-height:1.4;">24/7 unmanned coverage</div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:9px 16px;background:rgba(255,255,255,0.90);border:1px solid rgba(240,165,0,0.18);">
+      <div style="font-family:var(--sans);font-size:23px;font-weight:800;color:var(--gate);line-height:1;">100%</div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:#3d3858;line-height:1.4;">audit trail</div>
+        <div style="font-family:var(--mono);font-size:8px;color:#aaa;line-height:1.4;">Every interaction logged · RERA compliant</div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:9px 16px;background:rgba(255,255,255,0.90);border:1px solid rgba(25,10,70,0.10);">
+      <div style="font-family:var(--sans);font-size:23px;font-weight:800;color:var(--navy);line-height:1;">3×</div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:#3d3858;line-height:1.4;">faster check-in</div>
+        <div style="font-family:var(--mono);font-size:8px;color:#aaa;line-height:1.4;">Benchmark target · vs. manual desk</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 </div><!-- /slides-wrapper -->
 <div class="nav-sidebar left">
   <button class="nav-btn" id="btn-prev-l" onclick="navigate(-1)" disabled>↑</button>
