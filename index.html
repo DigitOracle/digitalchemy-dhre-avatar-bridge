@@ -242,9 +242,9 @@ html, body {
 }
 .nav-sidebar {
   position: fixed; top: 50%; transform: translateY(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
   background: rgba(255,255,255,0.97); border: 1px solid var(--rule);
-  padding: 16px 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 13px 7px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);
   z-index: 100;
 }
 .nav-sidebar.left { left: 0; border-left: none; border-radius: 0 6px 6px 0; }
@@ -648,166 +648,188 @@ html, body {
   </div>
 </div>
 
+
 <!-- ════════════════ SLIDE 4 — CRM & SALES INTELLIGENCE ════════════════ -->
 <div class="slide" id="slide-4">
 
-  <!-- VIDEO: position:absolute so it doesn't participate in flex layout -->
+  <!-- VIDEO: full bleed background -->
   <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;">
     <source src="slide4-crm-bg.mp4" type="video/mp4"/>
   </video>
-  <!-- OVERLAY: sits above video, below content -->
-  <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:rgba(255,255,255,0.45);"></div>
+  <!-- LIGHT OVERLAY — enough to ensure readability, video bleeds through -->
+  <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:rgba(247,246,252,0.82);"></div>
 
-  <!-- TOP BAR: direct child of .slide flex column, z-index above overlay -->
+  <!-- TOP BAR -->
   <div class="top-bar" style="position:relative;z-index:2;flex-shrink:0;"><div class="tb-navy"></div><div class="tb-red"></div></div>
 
-  <!-- HEADER: direct child -->
-  <div class="anim a1" style="position:relative;z-index:2;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:16px 72px;border-bottom:1px solid rgba(25,10,70,0.15);">
+  <!-- HEADER -->
+  <div class="anim a1" style="position:relative;z-index:2;flex-shrink:0;display:flex;align-items:flex-start;justify-content:space-between;padding:12px 64px 10px;border-bottom:1px solid rgba(25,10,70,0.10);">
     <div>
-      <div style="font-family:var(--mono);font-size:10px;color:var(--red);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px;">Domain 04 · CRM & Sales Intelligence</div>
-      <div style="font-family:var(--sans);font-size:26px;font-weight:800;color:var(--navy);letter-spacing:-0.02em;line-height:1;">The Avatar as Your Best Sales Agent</div>
+      <div style="font-family:var(--mono);font-size:9.5px;color:var(--red);letter-spacing:0.22em;text-transform:uppercase;margin-bottom:3px;">Domain 04 · CRM & Sales Intelligence · UAE Real Estate · DHRE Example</div>
+      <div style="font-family:var(--sans);font-size:23px;font-weight:800;color:var(--navy);letter-spacing:-0.02em;line-height:1.1;">The Avatar as Your Best Sales Agent</div>
+      <div style="font-family:var(--mono);font-size:10px;font-weight:400;color:#6b6885;margin-top:4px;line-height:1.5;">Turns your CRM, inventory &amp; market data into instant answers, proposals, analysis, and actions.</div>
     </div>
-    <div style="display:flex;align-items:center;gap:16px;">
-      <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;">Salesforce · DLD API · Oracle CRM · MS Exchange</div>
-      <div style="width:1px;height:24px;background:var(--rule);"></div>
+    <div style="display:flex;align-items:center;gap:14px;flex-shrink:0;padding-top:4px;">
+      <div style="font-family:var(--mono);font-size:9px;color:#aaa;letter-spacing:0.05em;">SALESFORCE · DLD API · ORACLE CRM · MS EXCHANGE</div>
+      <div style="width:1px;height:22px;background:rgba(25,10,70,0.12);"></div>
       <div style="font-family:var(--mono);font-size:10px;color:var(--muted);"><span style="color:var(--navy);font-weight:700;">04</span> / 09</div>
     </div>
   </div>
 
-  <!-- FLOWCHART ZONE: flex:1 + min-height:0 = fills all remaining space -->
-  <div style="position:relative;z-index:2;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:16px 52px;">
-    <svg class="anim a2" viewBox="0 0 1100 300" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;">
+  <!-- FLOWCHART ZONE -->
+  <div style="position:relative;z-index:2;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:10px 48px 6px;">
+    <svg class="anim a2" viewBox="0 0 1100 295" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;">
       <defs>
         <linearGradient id="s4lg" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#4A2DB0" stop-opacity="0.9"/>
-          <stop offset="100%" stop-color="#C8102E" stop-opacity="0.9"/>
+          <stop offset="0%" stop-color="#4A2DB0" stop-opacity="0.65"/>
+          <stop offset="100%" stop-color="#C8102E" stop-opacity="0.65"/>
         </linearGradient>
         <linearGradient id="s4ll" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#2D1A7A"/><stop offset="100%" stop-color="#190A46"/>
         </linearGradient>
         <linearGradient id="s4lb" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#190A46"/><stop offset="100%" stop-color="#08031a"/>
+          <stop offset="0%" stop-color="#1e0d5c"/><stop offset="100%" stop-color="#110535"/>
         </linearGradient>
         <linearGradient id="s4lr" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#9B0F23"/><stop offset="100%" stop-color="#C8102E"/>
+          <stop offset="0%" stop-color="#8B0D1E"/><stop offset="100%" stop-color="#C8102E"/>
         </linearGradient>
-        <filter id="s4glow" x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur stdDeviation="6" result="b"/>
+        <!-- Reduced glow — subtle, not game-UI -->
+        <filter id="s4glow" x="-10%" y="-10%" width="120%" height="120%">
+          <feGaussianBlur stdDeviation="2.5" result="b"/>
           <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
-        <marker id="s4arr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
-          <path d="M0,0 L7,3.5 L0,7 Z" fill="#C8102E" opacity="0.85"/>
+        <marker id="s4arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#C8102E" opacity="0.7"/>
         </marker>
       </defs>
 
       <!-- COLUMN LABELS -->
-      <text x="140" y="14" font-family="'DM Mono',monospace" font-size="9" fill="#999" letter-spacing="2" text-anchor="middle">DATA SOURCES</text>
-      <text x="550" y="14" font-family="'DM Mono',monospace" font-size="9" fill="#999" letter-spacing="2" text-anchor="middle">AVATAR BRAIN</text>
-      <text x="960" y="14" font-family="'DM Mono',monospace" font-size="9" fill="#999" letter-spacing="2" text-anchor="middle">OUTPUTS</text>
+      <text x="140" y="13" font-family="'DM Mono',monospace" font-size="8.5" fill="#999" letter-spacing="2.5" text-anchor="middle">DATA FEEDS</text>
+      <text x="550" y="13" font-family="'DM Mono',monospace" font-size="8.5" fill="#999" letter-spacing="2.5" text-anchor="middle">SALES INTELLIGENCE ENGINE</text>
+      <text x="960" y="13" font-family="'DM Mono',monospace" font-size="8.5" fill="#999" letter-spacing="2.5" text-anchor="middle">DELIVERED OUTCOMES</text>
 
-      <!-- LEFT NODES -->
-      <rect x="8" y="24" width="264" height="52" rx="3" fill="url(#s4ll)" stroke="rgba(74,45,176,0.5)" stroke-width="1"/>
-      <rect x="8" y="24" width="3" height="52" fill="#4A2DB0"/>
-      <text x="26" y="46" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">Salesforce CRM</text>
-      <text x="26" y="63" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">Lead records · Pipeline · Contacts</text>
+      <!-- ── LEFT NODES ── -->
+      <!-- CRM + Pipeline -->
+      <rect x="8" y="22" width="264" height="58" rx="3" fill="url(#s4ll)" stroke="rgba(74,45,176,0.25)" stroke-width="1"/>
+      <rect x="8" y="22" width="3" height="58" fill="#4A2DB0" rx="1"/>
+      <text x="26" y="47" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">CRM + Pipeline</text>
+      <text x="26" y="65" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">Salesforce · leads · contacts · stage</text>
 
-      <rect x="8" y="86" width="264" height="52" rx="3" fill="url(#s4ll)" stroke="rgba(74,45,176,0.5)" stroke-width="1"/>
-      <rect x="8" y="86" width="3" height="52" fill="#C8102E"/>
-      <text x="26" y="108" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">DLD Transactions API</text>
-      <text x="26" y="125" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">Live sales · Pricing · Market data</text>
+      <!-- Market Index -->
+      <rect x="8" y="90" width="264" height="58" rx="3" fill="url(#s4ll)" stroke="rgba(74,45,176,0.25)" stroke-width="1"/>
+      <rect x="8" y="90" width="3" height="58" fill="#C8102E" rx="1"/>
+      <text x="26" y="115" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">Market Index</text>
+      <text x="26" y="133" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">DLD transactions · RERA rental index</text>
 
-      <rect x="8" y="148" width="264" height="52" rx="3" fill="url(#s4ll)" stroke="rgba(74,45,176,0.5)" stroke-width="1"/>
-      <rect x="8" y="148" width="3" height="52" fill="#F0A500"/>
-      <text x="26" y="170" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">Oracle CRM · Exchange</text>
-      <text x="26" y="187" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">Unit availability · Agent calendars</text>
+      <!-- Inventory + Calendar -->
+      <rect x="8" y="158" width="264" height="58" rx="3" fill="url(#s4ll)" stroke="rgba(74,45,176,0.25)" stroke-width="1"/>
+      <rect x="8" y="158" width="3" height="58" fill="#F0A500" rx="1"/>
+      <text x="26" y="183" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">Inventory + Calendar</text>
+      <text x="26" y="201" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">Unit availability · pricing · agent slots</text>
 
-      <rect x="8" y="210" width="264" height="52" rx="3" fill="url(#s4ll)" stroke="rgba(74,45,176,0.5)" stroke-width="1"/>
-      <rect x="8" y="210" width="3" height="52" fill="#4A2DB0"/>
-      <text x="26" y="232" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">RERA Rental Index</text>
-      <text x="26" y="249" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">Yield projections · Comparables</text>
+      <!-- Brand + Compliance -->
+      <rect x="8" y="226" width="264" height="58" rx="3" fill="url(#s4ll)" stroke="rgba(74,45,176,0.25)" stroke-width="1"/>
+      <rect x="8" y="226" width="3" height="58" fill="#4A2DB0" rx="1"/>
+      <text x="26" y="251" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">Brand + Compliance</text>
+      <text x="26" y="269" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">Sales scripts · RERA rules · tone guides</text>
 
-      <!-- CONNECTORS L→C -->
-      <line x1="272" y1="50"  x2="398" y2="138" stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7"/>
-      <line x1="272" y1="112" x2="398" y2="152" stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7"/>
-      <line x1="272" y1="174" x2="398" y2="162" stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7"/>
-      <line x1="272" y1="236" x2="398" y2="172" stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7"/>
+      <!-- ── CONNECTORS L→C — 2 labelled ── -->
+      <line x1="272" y1="51"  x2="398" y2="143" stroke="url(#s4lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55"/>
+      <line x1="272" y1="119" x2="398" y2="158" stroke="url(#s4lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55"/>
+      <line x1="272" y1="187" x2="398" y2="168" stroke="url(#s4lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55"/>
+      <line x1="272" y1="255" x2="398" y2="178" stroke="url(#s4lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55"/>
 
-      <!-- BRAIN -->
-      <rect x="398" y="84" width="304" height="138" rx="4" fill="url(#s4lb)" stroke="#C8102E" stroke-width="1.5" filter="url(#s4glow)"/>
-      <rect x="403" y="89" width="294" height="128" rx="3" fill="none" stroke="rgba(200,16,46,0.2)" stroke-width="1"/>
-      <text x="550" y="114" font-family="'DM Mono',monospace" font-size="8" fill="#C8102E" letter-spacing="3" text-anchor="middle">AVATAR BRAIN</text>
-      <text x="550" y="142" font-family="'Syne',sans-serif" font-size="20" font-weight="800" fill="#fff" text-anchor="middle">RAG + Fine-Tune</text>
-      <line x1="425" y1="157" x2="675" y2="157" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
-      <rect x="413" y="164" width="122" height="28" rx="2" fill="rgba(74,45,176,0.55)" stroke="#4A2DB0" stroke-width="1"/>
-      <text x="474" y="182" font-family="'DM Mono',monospace" font-size="9" fill="#fff" text-anchor="middle">Layer 1 · RAG</text>
-      <rect x="565" y="164" width="122" height="28" rx="2" fill="rgba(200,16,46,0.22)" stroke="#C8102E" stroke-width="1"/>
-      <text x="626" y="182" font-family="'DM Mono',monospace" font-size="9" fill="#fff" text-anchor="middle">Layer 2 · Fine-Tune</text>
+      <!-- ── BRAIN — Sales Intelligence Engine ── -->
+      <rect x="398" y="84" width="304" height="148" rx="4" fill="url(#s4lb)" stroke="rgba(200,16,46,0.45)" stroke-width="1.5" filter="url(#s4glow)"/>
+      <rect x="402" y="88" width="296" height="140" rx="3" fill="none" stroke="rgba(200,16,46,0.1)" stroke-width="1"/>
+      <!-- Label -->
+      <text x="550" y="112" font-family="'DM Mono',monospace" font-size="7.5" fill="rgba(200,16,46,0.85)" letter-spacing="2.5" text-anchor="middle">SALES INTELLIGENCE ENGINE</text>
+      <!-- Main headline — lighter weight, more readable -->
+      <text x="550" y="155" font-family="'Syne',sans-serif" font-size="15" font-weight="800" fill="#ffffff" text-anchor="middle">Grounded + Governed + Measurable</text>
+      <!-- Divider -->
+      <line x1="420" y1="174" x2="680" y2="174" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <!-- Sub pills -->
+      <rect x="408" y="180" width="128" height="26" rx="2" fill="rgba(74,45,176,0.4)" stroke="rgba(74,45,176,0.5)" stroke-width="1"/>
+      <text x="472" y="197" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.8)" text-anchor="middle">RAG · Live Data</text>
+      <rect x="564" y="180" width="128" height="26" rx="2" fill="rgba(200,16,46,0.18)" stroke="rgba(200,16,46,0.45)" stroke-width="1"/>
+      <text x="628" y="197" font-family="'DM Mono',monospace" font-size="8.5" fill="rgba(255,255,255,0.8)" text-anchor="middle">Fine-Tune · Brand Voice</text>
 
+      <!-- ── CONNECTORS C→R — 2 labelled ── -->
+      <line x1="702" y1="143" x2="828" y2="51"  stroke="url(#s4lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55" marker-end="url(#s4arr)"/>
+      <line x1="702" y1="158" x2="828" y2="119" stroke="url(#s4lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55" marker-end="url(#s4arr)"/>
+      <line x1="702" y1="168" x2="828" y2="187" stroke="url(#s4lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55" marker-end="url(#s4arr)"/>
+      <line x1="702" y1="178" x2="828" y2="255" stroke="url(#s4lg)" stroke-width="1.2" stroke-dasharray="5 3" opacity="0.55" marker-end="url(#s4arr)"/>
 
-      <!-- CONNECTORS C→R -->
-      <line x1="702" y1="138" x2="828" y2="50"  stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7" marker-end="url(#s4arr)"/>
-      <line x1="702" y1="152" x2="828" y2="112" stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7" marker-end="url(#s4arr)"/>
-      <line x1="702" y1="162" x2="828" y2="174" stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7" marker-end="url(#s4arr)"/>
-      <line x1="702" y1="172" x2="828" y2="236" stroke="url(#s4lg)" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.7" marker-end="url(#s4arr)"/>
+      <!-- ── RIGHT NODES — concrete workflow artifacts ── -->
+      <!-- Unit Q&A -->
+      <rect x="828" y="22" width="264" height="58" rx="3" fill="url(#s4lr)" stroke="rgba(200,16,46,0.25)" stroke-width="1"/>
+      <rect x="1089" y="22" width="3" height="58" fill="#C8102E" rx="1"/>
+      <text x="846" y="47" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">Unit Q&amp;A</text>
+      <text x="846" y="65" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">Availability · views · payment plans</text>
 
-      <!-- RIGHT NODES -->
-      <rect x="828" y="24" width="264" height="52" rx="3" fill="url(#s4lr)" stroke="rgba(200,16,46,0.5)" stroke-width="1"/>
-      <rect x="1089" y="24" width="3" height="52" fill="#C8102E"/>
-      <text x="846" y="46" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">Conversational</text>
-      <text x="846" y="63" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">Units · availability · payment plans</text>
+      <!-- Proposal + Follow-up -->
+      <rect x="828" y="90" width="264" height="58" rx="3" fill="url(#s4lr)" stroke="rgba(200,16,46,0.25)" stroke-width="1"/>
+      <rect x="1089" y="90" width="3" height="58" fill="#F0A500" rx="1"/>
+      <text x="846" y="115" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">Proposal + Follow-up</text>
+      <text x="846" y="133" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">Branded PDF · reservation summary</text>
 
-      <rect x="828" y="86" width="264" height="52" rx="3" fill="url(#s4lr)" stroke="rgba(200,16,46,0.5)" stroke-width="1"/>
-      <rect x="1089" y="86" width="3" height="52" fill="#F0A500"/>
-      <text x="846" y="108" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">Generative</text>
-      <text x="846" y="125" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">Proposals · payment summaries</text>
+      <!-- Pricing Guidance -->
+      <rect x="828" y="158" width="264" height="58" rx="3" fill="url(#s4lr)" stroke="rgba(200,16,46,0.25)" stroke-width="1"/>
+      <rect x="1089" y="158" width="3" height="58" fill="#4A2DB0" rx="1"/>
+      <text x="846" y="183" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">Pricing Guidance</text>
+      <text x="846" y="201" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">Comparables · yield forecast · psf</text>
 
-      <rect x="828" y="148" width="264" height="52" rx="3" fill="url(#s4lr)" stroke="rgba(200,16,46,0.5)" stroke-width="1"/>
-      <rect x="1089" y="148" width="3" height="52" fill="#4A2DB0"/>
-      <text x="846" y="170" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">Analytical</text>
-      <text x="846" y="187" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">DLD comparables · yield projections</text>
-
-      <rect x="828" y="210" width="264" height="52" rx="3" fill="url(#s4lr)" stroke="rgba(200,16,46,0.5)" stroke-width="1"/>
-      <rect x="1089" y="210" width="3" height="52" fill="#C8102E"/>
-      <text x="846" y="232" font-family="'Syne',sans-serif" font-size="13" font-weight="700" fill="#fff">Action</text>
-      <text x="846" y="249" font-family="'DM Mono',monospace" font-size="9" fill="rgba(255,255,255,0.5)">Books viewings · creates SF leads</text>
+      <!-- Workflow Actions -->
+      <rect x="828" y="226" width="264" height="58" rx="3" fill="url(#s4lr)" stroke="rgba(200,16,46,0.25)" stroke-width="1"/>
+      <rect x="1089" y="226" width="3" height="58" fill="#C8102E" rx="1"/>
+      <text x="846" y="251" font-family="'Syne',sans-serif" font-size="13.5" font-weight="700" fill="#fff">Workflow Actions</text>
+      <text x="846" y="269" font-family="'DM Mono',monospace" font-size="10" fill="rgba(255,255,255,0.55)">Book viewing · create lead · update CRM</text>
 
     </svg>
   </div>
 
-  <!-- STAT PILLS: direct child, fixed height -->
-  <div class="anim a6" style="position:relative;z-index:2;flex-shrink:0;display:flex;gap:10px;padding:0 52px 12px;">
-    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:10px 16px;background:rgba(255,255,255,0.82);border:1px solid rgba(25,10,70,0.14);backdrop-filter:blur(10px);">
-      <div style="font-family:var(--sans);font-size:24px;font-weight:800;color:var(--navy);">32%</div>
-      <div style="font-family:var(--mono);font-size:9px;color:var(--mid);line-height:1.5;">more deals closed<br/>AI-powered lead scoring</div>
-    </div>
-    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:10px 16px;background:rgba(255,255,255,0.82);border:1px solid rgba(200,16,46,0.18);backdrop-filter:blur(10px);">
-      <div style="font-family:var(--sans);font-size:24px;font-weight:800;color:var(--red);">30%</div>
-      <div style="font-family:var(--mono);font-size:9px;color:var(--mid);line-height:1.5;">agent time freed<br/>by AI avatar queries</div>
-    </div>
-    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:10px 16px;background:rgba(255,255,255,0.82);border:1px solid rgba(240,165,0,0.25);backdrop-filter:blur(10px);">
-      <div style="font-family:var(--sans);font-size:24px;font-weight:800;color:var(--gate);">&lt;30s</div>
-      <div style="font-family:var(--mono);font-size:9px;color:var(--mid);line-height:1.5;">response time<br/>5 min window to close</div>
-    </div>
-    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:10px 16px;background:rgba(255,255,255,0.82);border:1px solid rgba(25,10,70,0.14);backdrop-filter:blur(10px);">
-      <div style="font-family:var(--sans);font-size:24px;font-weight:800;color:var(--navy);">24/7</div>
-      <div style="font-family:var(--mono);font-size:9px;color:var(--mid);line-height:1.5;">revenue intelligence<br/>no agent required</div>
-    </div>
+  <!-- HERO STATEMENT — between flowchart and stat pills -->
+  <div class="anim a5" style="position:relative;z-index:2;flex-shrink:0;background:var(--navy);padding:11px 64px;display:flex;align-items:center;justify-content:space-between;">
+    <div style="font-family:var(--sans);font-size:15.5px;font-weight:700;color:#fff;letter-spacing:-0.01em;">From first inquiry to signed deal — the avatar handles everything in between.</div>
+    <div style="font-family:var(--mono);font-size:8.5px;color:rgba(255,255,255,0.35);letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;flex-shrink:0;" onclick="goTo(3)">← Capability Overview</div>
   </div>
 
-  <!-- HERO STATEMENT: direct child, fixed height -->
-  <div class="anim a7" style="position:relative;z-index:2;flex-shrink:0;background:var(--navy);padding:15px 72px;display:flex;align-items:center;justify-content:space-between;">
-    <div style="font-family:var(--sans);font-size:17px;font-weight:700;color:#fff;letter-spacing:-0.01em;">From first inquiry to signed deal — the avatar handles everything in between.</div>
-    <div style="display:flex;align-items:center;gap:20px;flex-shrink:0;">
-      <div style="font-family:var(--mono);font-size:9px;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;" onclick="goTo(3)">← Capability Overview</div>
-      <div style="font-family:var(--mono);font-size:10px;color:rgba(255,255,255,0.4);"><span style="color:#fff;font-weight:700;">04</span> / 09</div>
+  <!-- STAT PILLS with proof anchors -->
+  <div class="anim a6" style="position:relative;z-index:2;flex-shrink:0;display:flex;gap:8px;padding:8px 48px 10px;">
+    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:9px 16px;background:rgba(255,255,255,0.90);border:1px solid rgba(25,10,70,0.10);">
+      <div style="font-family:var(--sans);font-size:23px;font-weight:800;color:var(--navy);line-height:1;">32%</div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:#3d3858;line-height:1.4;">more deals closed</div>
+        <div style="font-family:var(--mono);font-size:8px;color:#aaa;line-height:1.4;">Benchmark target · AI lead scoring</div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:9px 16px;background:rgba(255,255,255,0.90);border:1px solid rgba(200,16,46,0.12);">
+      <div style="font-family:var(--sans);font-size:23px;font-weight:800;color:var(--red);line-height:1;">30%</div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:#3d3858;line-height:1.4;">agent time freed</div>
+        <div style="font-family:var(--mono);font-size:8px;color:#aaa;line-height:1.4;">Benchmark target · routine query deflection</div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:9px 16px;background:rgba(255,255,255,0.90);border:1px solid rgba(240,165,0,0.18);">
+      <div style="font-family:var(--sans);font-size:23px;font-weight:800;color:var(--gate);line-height:1;">&lt;30s</div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:#3d3858;line-height:1.4;">response to every inquiry</div>
+        <div style="font-family:var(--mono);font-size:8px;color:#aaa;line-height:1.4;">vs. 5 min lead-goes-cold window</div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;align-items:center;gap:12px;padding:9px 16px;background:rgba(255,255,255,0.90);border:1px solid rgba(25,10,70,0.10);">
+      <div style="font-family:var(--sans);font-size:23px;font-weight:800;color:var(--navy);line-height:1;">24/7</div>
+      <div>
+        <div style="font-family:var(--mono);font-size:10px;color:#3d3858;line-height:1.4;">revenue intelligence</div>
+        <div style="font-family:var(--mono);font-size:8px;color:#aaa;line-height:1.4;">No agent required · multilingual</div>
+      </div>
     </div>
   </div>
 
 </div>
-
 </div><!-- /slides-wrapper -->
 <div class="nav-sidebar left">
-  <button class="nav-btn" id="btn-prev-l" onclick="navigate(-1)" disabled>← Prev</button>
+  <button class="nav-btn" id="btn-prev-l" onclick="navigate(-1)" disabled>↑</button>
   <div class="nav-dots" id="dots-l">
     <div class="nav-dot active" onclick="goTo(1)"></div>
     <div class="nav-dot" onclick="goTo(2)"></div>
@@ -819,12 +841,12 @@ html, body {
     <div class="nav-dot" onclick="goTo(8)"></div>
     <div class="nav-dot" onclick="goTo(9)"></div>
   </div>
-  <button class="nav-btn" id="btn-next-l" onclick="navigate(1)">Next →</button>
+  <button class="nav-btn" id="btn-next-l" onclick="navigate(1)">↓</button>
 </div>
 
 <!-- RIGHT NAV -->
 <div class="nav-sidebar right">
-  <button class="nav-btn" id="btn-prev-r" onclick="navigate(-1)" disabled>← Prev</button>
+  <button class="nav-btn" id="btn-prev-r" onclick="navigate(-1)" disabled>↑</button>
   <div class="nav-dots" id="dots-r">
     <div class="nav-dot active" onclick="goTo(1)"></div>
     <div class="nav-dot" onclick="goTo(2)"></div>
@@ -836,16 +858,16 @@ html, body {
     <div class="nav-dot" onclick="goTo(8)"></div>
     <div class="nav-dot" onclick="goTo(9)"></div>
   </div>
-  <button class="nav-btn" id="btn-next-r" onclick="navigate(1)">Next →</button>
+  <button class="nav-btn" id="btn-next-r" onclick="navigate(1)">↓</button>
 </div>
 
 <!-- HIDDEN ORIGINAL NAV (keeps JS working) -->
 <div class="nav" style="display:none;">
-  <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>← Prev</button>
+  <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>↑</button>
   <div class="nav-div"></div>
   <div class="nav-counter" id="counter"><span>1</span> / 3</div>
   <div class="nav-div"></div>
-  <button class="nav-btn" id="btn-next" onclick="navigate(1)">Next →</button>
+  <button class="nav-btn" id="btn-next" onclick="navigate(1)">↓</button>
 </div>
 
 </div><!-- /deck -->
